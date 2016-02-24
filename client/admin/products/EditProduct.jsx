@@ -55,7 +55,8 @@ EditProduct = React.createClass({
         'height': newProductObj.height,
         'width': newProductObj.width,
         'length': newProductObj.length,
-        'price': newProductObj.price
+        'price': newProductObj.price,
+        'image': newProductObj.image
       }
     });
     /*after everything, closes the modal*/
