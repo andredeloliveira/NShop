@@ -27,9 +27,9 @@ First of all you'll need Node.js. Depending on your OS it'll be different.
 
 Ubuntu and Debian:
 
-`curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
+`curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -`
 
-sudo apt-get install -y nodejs`
+`sudo apt-get install -y nodejs`
 
 If you have another distro or OS, you can check [Node.js's](https://nodejs.org) Website.
 
