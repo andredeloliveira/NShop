@@ -20,6 +20,9 @@ Meteor is a full-stack framework all written in JavaScript. It runs on server us
 React is becoming the most popular UI framework ever. Well, it is easy to understand, they have server rendering and a easy-to-learn
 `.jsx` files, which mix JS with html, making really easy to write components. Also, it accepts ES6 sintax which is great!
 
+3. Semantic-ui  
+
+We use Semantic-ui to organize the UI. More info and docs [here](http://Semantic-ui.com);
 
 ## Getting Started
 

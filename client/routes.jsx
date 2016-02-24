@@ -17,6 +17,18 @@ FlowRouter.route("/register", {
     renderLayoutWith(<RegisterForm/>);
   }
 });
+FlowRouter.route("/admin",{
+    name: "Admin",
+    action(params){
+      renderLayoutWith(<Admin/>);
+    }
+});
+FlowRouter.route("/admin/products", {
+  name: "ProductsAdmin",
+  action(params){
+    renderLayoutWith(<ProductsAdmin></ProductsAdmin>);
+  }
+});
 /*function to render all the layouts with the main Component (Layout)*/
 function renderLayoutWith(component){
   ReactLayout.render(Main,{

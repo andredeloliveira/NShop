@@ -23,3 +23,10 @@ kadira:react-layout
 accounts-password
 flemay:less-autoprefixer
 semantic:ui
+service-configuration
+accounts-facebook
+cfs:standard-packages
+cfs:gridfs
+praneybehl:react-dropzone
+praneybehl:react-image-crop
+cfs:ejson-file
