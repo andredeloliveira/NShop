@@ -24,6 +24,7 @@ Header = React.createClass({
     return(
       <div className="ui fixed menu">
         <a className="item" href="/">Home</a>
+        <a className="item" href="/admin">Admin</a>
         <div className="right menu">
         {logoutButton}
         {loginButtons}

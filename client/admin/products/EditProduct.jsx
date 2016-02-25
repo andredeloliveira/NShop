@@ -1,27 +1,8 @@
+Meteor.subscribe("images");
+
+
 EditProduct = React.createClass({
 
-  getInitialState(){
-    return {
-      files: []
-    }
-  },
-  onDrop(files){
-    this.setState({
-      files: files
-    });
-  },
-  onOpenClick(){
-    this.refs.dropzone.open();
-  },
-  imagesRender(){
-    return this.state.files.map((file)=>{
-      return (
-        <div>
-        <img src={file.preview} key={file.name + file.preview} className="adminImage"/>
-        </div>
-      );
-    });
-  },
   onSubmit(event){
     event.preventDefault();
     /*get all the values again, into the object*/
@@ -32,21 +13,29 @@ EditProduct = React.createClass({
       height : event.target.height.value,
       width : event.target.width.value,
       length : event.target.length.value,
-      price : event.target.price.value
+      price : event.target.price.value,
+      stock: event.target.stock.value,
+      manufacturer: event.target.manufacturer.value,
+      category: event.target.category.value
     };
-    /*for now only one image... I'll be working on this, to upload many images at once.*/
-    if(this.state.files.length > 0){
-      var fileObj = Images.insert(this.state.files[0], (err, fileObj) => {
-          if(err){
-            console.error('error during insert');
-          }else{
-            return fileObj;
-          }
+    /*adds the images to the database.. I think it can be refactored to a
+    single function that returns an Array with all the added images, but
+    we still need to add the component to add into the db and another one for
+    image buckets such as s3, etc*/
+    var images = this.refs.images.returnFiles();
+    var imagesToBeInserted = [];
+    for(var i =0; i< images.length; i++){
+      var pImage = Images.insert(images[i], (err, fileObj) => {
+        if(err){
+          console.error('duh');
+        }else {
+          return fileObj;
+        }
       });
-      newProductObj.image = fileObj;
-    }else {
-      newProductObj.image = this.props.product.image;
+      imagesToBeInserted.push(pImage);
     }
+    newProductObj.images = imagesToBeInserted;
+
     Products.update({_id: this.props.product._id}, {$set:
       {
         'name': newProductObj.name,
@@ -56,11 +45,19 @@ EditProduct = React.createClass({
         'width': newProductObj.width,
         'length': newProductObj.length,
         'price': newProductObj.price,
-        'image': newProductObj.image
+        'stock': newProductObj.stock,
+        'manufacturer' : newProductObj.manufacturer,
+        'category' : newProductObj.category,
+        'images': newProductObj.images
       }
     });
     /*after everything, closes the modal*/
     this.props.close();
+  },
+  actualImagesRender(){
+    return this.props.product.images.map((image, index)=>{
+      return <img key={index} src={image.url()} className="adminImage" />
+    });
   },
   render(){
     style ={
@@ -85,16 +82,16 @@ EditProduct = React.createClass({
           <label>Weight</label>
           <input type="text" placeholder="Weight" name="weight" defaultValue={this.props.product.weight}/>
         </div>
-        <h4 className="ui dividing header">Size</h4>
+        <h4 className="ui dividing header">Size(cm)</h4>
         <div className="three fields">
           <div className="field">
-            <input type="text" placeholder="Height" name="height" defaultValue={this.props.product.height}/>
+            <input type="number" placeholder="Height" name="height" defaultValue={this.props.product.height}/>
           </div>
           <div className="field">
-            <input type="text" placeholder="Width" name="width"  defaultValue={this.props.product.width}/>
+            <input type="number" placeholder="Width" name="width"  defaultValue={this.props.product.width}/>
           </div>
           <div className="field">
-            <input type="text" placeholder="Length" name="length" defaultValue={this.props.product.length}/>
+            <input type="number" placeholder="Length" name="length" defaultValue={this.props.product.length}/>
           </div>
         </div>
         <div className="field">
@@ -102,21 +99,28 @@ EditProduct = React.createClass({
             <input type="text" placeholder="Price" name="price" defaultValue={this.props.product.price}/>
         </div>
         <div className="field">
-          <label>Image</label>
+            <label>Quantity in Stock</label>
+            <input type="number" placeholder="Quantity in Stock" name="stock" defaultValue={this.props.product.stock} />
+        </div>
+        <div className="field">
+            <label>Manufacturer</label>
+            <input type="text" placeholder="Manufacturer" name="manufacturer" defaultValue={this.props.product.manufacturer}/>
+        </div>
+        <div className="field">
+            <label>Category</label>
+            <input type="text" placeholder="Category" name="category" defaultValue={this.props.product.category}/>
+        </div>
+        <div className="field">
+          <label>Images</label>
           <div>
-            <h1>Pictures</h1>
+            <h1>Actual Pictures</h1>
             <br></br>
             <div>
-              <img src={this.props.product.image.url()} className="adminImage" />
+              {this.actualImagesRender()}
             </div>
           </div>
           <div>
-            <Dropzone ref="dropzone" onDrop={this.onDrop}>
-              <div> Try dropping some files here, or click to select files to upload</div>
-            </Dropzone>
-            {this.state.files ? <div>
-              {this.imagesRender()}
-            </div> : null }
+            <ImageField ref="images" />
           </div>
           </div>
         <button className="ui button" type="submit" >Update</button>

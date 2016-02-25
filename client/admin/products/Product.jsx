@@ -45,7 +45,7 @@ ProductAdmin = React.createClass({
                 </div>
               </div>
             </div>
-            <img src={this.props.product.image.url()} />
+            <img src={this.props.product.images[0].url()} />
           </div>
           <div className="content">
             <p className="header">{this.props.product.name}</p>
