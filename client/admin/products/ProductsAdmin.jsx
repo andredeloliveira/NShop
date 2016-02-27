@@ -19,6 +19,21 @@ ProductsAdmin = React.createClass({
   /*We still need validations on the fields*/
   onSubmit(event){
     event.preventDefault();
+    function addImagesToDB(images){
+      var imagesToBeInserted = [];
+      for(var i =0; i< images.length; i++){
+        var pImage = Images.insert(images[i], (err, fileObj) => {
+          if(err){
+            console.error('duh');
+          }else {
+            console.log(pImage);
+            return fileObj;
+          }
+        });
+        imagesToBeInserted.push(pImage);
+      }
+      return imagesToBeInserted;
+    }
     var productObject = {
        name : event.target.name.value,
        description : event.target.description.value,
@@ -38,19 +53,10 @@ ProductsAdmin = React.createClass({
     we still need to add the component to add into the db and another one for
     image buckets such as s3, etc*/
     var images = this.refs.images.returnFiles();
-    var imagesToBeInserted = [];
-    for(var i =0; i< images.length; i++){
-      var pImage = Images.insert(images[i], (err, fileObj) => {
-        if(err){
-          console.error('duh');
-        }else {
-          console.log(pImage);
-          return fileObj;
-        }
-      });
-      imagesToBeInserted.push(pImage);
-    }
-    productObject.images = imagesToBeInserted;
+    var colors = this.refs.colors.returnFiles();
+    /*add colors and images*/
+    productObject.images = addImagesToDB(images);
+    productObject.colors = addImagesToDB(colors);
     console.log(productObject);
 
     /*add the image object into it*/
@@ -130,10 +136,17 @@ ProductsAdmin = React.createClass({
           </div>
           <div className="field">
             <label>Images</label>
+            <div className="ui divider"></div>
             <div className="ui four column grid">
               <ImageField ref="images"/>
             </div>
-
+          </div>
+          <div className="field">
+            <label>Colors (Images)</label>
+            <div className="ui divider"></div>
+            <div className="ui four column grid">
+              <ImageField ref="colors"/>
+            </div>
           </div>
           <button className="ui button" type="submit">Submit</button>
        </form>

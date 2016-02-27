@@ -36,8 +36,9 @@ LoginForm = React.createClass({
   },
   render(){
     return(
+    <div>
+      <LoginWithFacebookButton/>
       <div className="ui form error">
-        <loginWithFacebookButton/>
         <form onSubmit={this.onSubmit}>
           <div className="field">
             <label>E-mail</label>
@@ -53,6 +54,7 @@ LoginForm = React.createClass({
           </div>
         </form>
       </div>
+    </div>
     );
   }
 })

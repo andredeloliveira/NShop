@@ -1,6 +1,8 @@
-loginWithFacebookButton = React.createClass({
+LoginWithFacebookButton = React.createClass({
   getInitialState(){
-    error: ''
+    return {
+      error: ''
+    }
   },
   setErrorState(error){
     this.setState({error: error.reason})
@@ -24,7 +26,7 @@ loginWithFacebookButton = React.createClass({
     return (
     <div>
         <button className="ui facebook button" onClick={this.loginWithFacebook}>
-          <i className="icon facebok"></i>
+          <i className="icon facebook"></i>Login with Facebook
         </button>
     </div>
     );
