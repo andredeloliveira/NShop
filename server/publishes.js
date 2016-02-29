@@ -5,3 +5,9 @@ Meteor.publish("products", function(){
 Meteor.publish("users", function(){
   return Meteor.users.find();
 });
+Meteor.publish("manufacturers", function(){
+  return Manufacturers.find();
+});
+Meteor.publish("categories", function(){
+  return Categories.find();
+});

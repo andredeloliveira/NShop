@@ -1,18 +1,40 @@
 /*This file will be responsible for the rendering and manipulation of the product in the admin area*/
 Meteor.subscribe("images");
 Meteor.subscribe("products");
+Meteor.subscribe("categories");
+Meteor.subscribe("manufacturers");
 ProductsAdmin = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData(){
     let query = {};
     return {
-      products: Products.find({}).fetch()
+      products: Products.find({}).fetch(),
+      manufacturers: Manufacturers.find({}).fetch(),
+      categories: Categories.find({}).fetch()
     }
   },
   productsRender(){
     return this.data.products.map((product) =>{
       return (
           <ProductAdmin key={product._id} product={product} />
+      );
+    });
+  },
+  manufacturersOptionsRender(){
+    return this.data.manufacturers.map((manufacturer) => {
+      return (
+          <option key={manufacturer._id} value={manufacturer._id}>
+            {manufacturer.name}
+          </option>
+      );
+    });
+  },
+  categoriesOptionsRender(){
+    return this.data.categories.map( (category) => {
+      return(
+          <option key={category._id} value={category._id}>
+            {category.name}
+          </option>
       );
     });
   },
@@ -78,8 +100,9 @@ ProductsAdmin = React.createClass({
     event.target.length.value = '';
     event.target.price.value = '';
     event.target.stock.value = '';
-    event.target.manufacturer.value = '';
-    event.target.category.value = '';
+
+
+
   },
   onDrop(files){
     console.log(files);
@@ -128,11 +151,15 @@ ProductsAdmin = React.createClass({
           </div>
           <div className="field">
               <label>Manufacturer</label>
-              <input type="text" placeholder="Manufacturer" name="manufacturer"/>
+              <select className="ui fluid dropdown" name="manufacturer">
+                {this.manufacturersOptionsRender()}
+              </select>
           </div>
           <div className="field">
               <label>Category</label>
-              <input type="text" placeholder="Category" name="category"/>
+              <select className="ui fluid dropdown" name="category">
+                {this.categoriesOptionsRender()}
+              </select>
           </div>
           <div className="field">
             <label>Images</label>

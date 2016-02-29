@@ -1,4 +1,4 @@
-Manufacturers = new Mongo.Collection("manufacturer");
+Manufacturers = new Mongo.Collection("manufacturers");
 Manufacturers.allow({
   insert: function(){
     return true;

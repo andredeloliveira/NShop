@@ -1,8 +1,17 @@
 Meteor.subscribe("images");
-
+Meteor.subscribe("manufacturers");
+Meteor.subscribe("categories");
 
 EditProduct = React.createClass({
-
+mixins: [ReactMeteorData],
+getMeteorData(){
+  return{
+    manufacturer: Manufacturers.findOne(this.props.product.manufacturer),
+    manufacturers: Manufacturers.find({}).fetch(),
+    category: Categories.findOne(this.props.product.category),
+    categories: Categories.find({}).fetch()
+  }
+},
   onSubmit(event){
     event.preventDefault();
     /*get all the values again, into the object*/
@@ -59,6 +68,24 @@ EditProduct = React.createClass({
       return <img key={index} src={image.url()} className="adminImage" />
     });
   },
+  manufacturersOptionsRender(){
+    return this.data.manufacturers.map((manufacturer) => {
+      return (
+          <option key={manufacturer._id} value={manufacturer._id}>
+            {manufacturer.name}
+          </option>
+      );
+    });
+  },
+  categoriesOptionsRender(){
+    return this.data.categories.map( (category) => {
+      return(
+          <option key={category._id} value={category._id}>
+            {category.name}
+          </option>
+      );
+    });
+  },
   render(){
     style ={
       marginTop: '30px',
@@ -104,11 +131,17 @@ EditProduct = React.createClass({
         </div>
         <div className="field">
             <label>Manufacturer</label>
-            <input type="text" placeholder="Manufacturer" name="manufacturer" defaultValue={this.props.product.manufacturer}/>
+            <select className="ui fluid dropdown" name="manufacturer">
+              <option value={this.data.manufacturer._id}>{this.data.manufacturer.name}</option>
+              {this.manufacturersOptionsRender()}
+            </select>
         </div>
         <div className="field">
             <label>Category</label>
-            <input type="text" placeholder="Category" name="category" defaultValue={this.props.product.category}/>
+              <select className="ui fluid dropdown" name="category">
+                <option value={this.data.category._id}>{this.data.manufacturer.name}</option>
+                {this.manufacturersOptionsRender()}
+              </select>
         </div>
         <div className="field">
           <label>Images</label>

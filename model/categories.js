@@ -1,6 +1,6 @@
-Categories = new Mongo.Collection("categories'");
+Categories = new Mongo.Collection("categories");
 
-Categories.allow({ 
+Categories.allow({
   insert: function(){
     return true;
   },
