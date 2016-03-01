@@ -139,8 +139,8 @@ getMeteorData(){
         <div className="field">
             <label>Category</label>
               <select className="ui fluid dropdown" name="category">
-                <option value={this.data.category._id}>{this.data.manufacturer.name}</option>
-                {this.manufacturersOptionsRender()}
+                <option value={this.data.category._id}>{this.data.category.name}</option>
+                {this.categoriesOptionsRender()}
               </select>
         </div>
         <div className="field">

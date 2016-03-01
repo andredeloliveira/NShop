@@ -13,15 +13,14 @@ ProductAdmin = React.createClass({
     in this case, I want to load the Modal, special case to be detachable. Loading as a State, makes
     the modal accessible from all functions in te component.
   */
-  componentDidMount(){
-    this.setState({
-      modal: $('#modal').modal({detachable:false})
-    })
+  shouldComponentUpdate(nextProps, nextState, event){
+    return true;
   },
-  getInitialState(){
-    return {
-        product: this.props.product
-    }
+  componentDidMount(){
+    var modalId = '#'+this.props.product._id ;
+    this.setState({
+      modal: $(modalId).modal({detachable:false})
+    })
   },
   toggleModal(event){
     this.state.modal.modal('show');
@@ -30,7 +29,6 @@ ProductAdmin = React.createClass({
     this.state.modal.modal('hide');
   },
   render(){
-
     return(
   <div>
     <div className="column">
@@ -54,14 +52,16 @@ ProductAdmin = React.createClass({
             </div>
           </div>
           <div className="extra content">
-            <button className="ui red button" onClick={this.removeProduct}><i className="icon remove circle"></i> Remove</button>
-            <button className="ui orange button" onClick={this.toggleModal}><i className="icon write"></i> Edit</button>
+            <div className="ui two buttons">
+              <button className="ui red button" onClick={this.removeProduct}><i className="icon remove circle"></i> Remove</button>
+              <button className="ui orange button" onClick={this.toggleModal}><i className="icon write"></i> Edit</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-      <div className="ui modal editform" id="modal">
-        <EditProduct product={this.props.product} close={this.closeModal} update={this.updateTeste} />
+      <div className="ui modal editform" id={this.props.product._id}>
+        <EditProduct product={this.props.product} close={this.closeModal}  />
       </div>
   </div>
     );

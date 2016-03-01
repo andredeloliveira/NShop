@@ -4,6 +4,7 @@ Welcome to NShop, a brand-new OpenSource solution in e-commerce entirely based o
 
 So, It is still early development fase. We just started our project and we still have long path to finish. But soon we will accomplish it.
 
+This project is under development. Soon we plan to release our alpha version.
 
 ##What should I know first?
 

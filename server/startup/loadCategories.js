@@ -4,14 +4,17 @@ Meteor.startup(function(){
     var categories = [
       {
         name: 'category 1',
+        description: 'this is the description for category 1',
         parentCategory: '',
       },
       {
         name: 'category 2',
+        description: 'this is the description for category 2',
         parentCategory: '',
       },
       {
         name: 'category 3',
+        description: 'this is the description for category 3',
         parentCategory: ''
       }
     ];

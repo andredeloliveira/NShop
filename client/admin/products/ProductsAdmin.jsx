@@ -5,6 +5,11 @@ Meteor.subscribe("categories");
 Meteor.subscribe("manufacturers");
 ProductsAdmin = React.createClass({
   mixins: [ReactMeteorData],
+  getInitialState(){
+    return {
+      updated:false
+    }
+  },
   getMeteorData(){
     let query = {};
     return {
@@ -12,6 +17,10 @@ ProductsAdmin = React.createClass({
       manufacturers: Manufacturers.find({}).fetch(),
       categories: Categories.find({}).fetch()
     }
+  },
+  
+  componentWillUpdate(){
+    console.log("cadê");
   },
   productsRender(){
     return this.data.products.map((product) =>{
@@ -100,7 +109,7 @@ ProductsAdmin = React.createClass({
     event.target.length.value = '';
     event.target.price.value = '';
     event.target.stock.value = '';
-
+    this.setState({updated: true});
 
 
   },
