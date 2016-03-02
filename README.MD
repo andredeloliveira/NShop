@@ -56,6 +56,18 @@ Now, you can clone the repo and have the project on your computer.
 
 `git clone https://github.com/andredeloliveira/NShop.git`
 
+
+## Populating the Database
+
+First, you need to install the package node-mongo-seeds:
+
+`npm install -g node-mongo-seeds`
+
+Then, you can run the command `seed` inside the folder `db/` to populate the data base.
+
+All done. Go play!
+
+
 If you want to know better about React, Meteor and Mongo, please, have a look into
 their docs. They are really good!
 [React](https://facebook.github.io/react/docs/)
