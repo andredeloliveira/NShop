@@ -1,0 +1,5 @@
+{
+	"undefined": "localhost:3001/meteor",
+	"dev": "localhost:3001/meteor",
+	"prod": "localhost:3001/meteor"
+}
