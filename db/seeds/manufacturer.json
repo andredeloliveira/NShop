@@ -1,11 +1,14 @@
 [
   {
-    "name": "manufacturer 1"
+    "_id" : "yPa9vhh3LEamP3jff",
+    "name" : "manufacturer 1"
   },
   {
-    "name": "manufacturer 2"
+    "_id" : "bDggG4XeZGfEroz99",
+    "name" : "manufacturer 2"
   },
   {
-    "name": "manufacturer 3"
+    "_id" : "4TCpGRiGqbn5zx7ab",
+    "name" : "manufacturer 3"
   }
 ]

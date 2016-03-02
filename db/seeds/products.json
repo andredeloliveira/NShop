@@ -1,5 +1,6 @@
 [
   {
+  	"_id" : "56d74cf0cfc554a227592fa9",
   	"name" : "Product 1",
   	"description" : "This product is amazing.",
   	"weight" : "123.0",
@@ -8,13 +9,20 @@
   	"length" : "123.0",
   	"price" : "123.0",
   	"stock" : "123",
-  	"manufacturer" : "manufacturer 1",
-  	"category" : "category 1",
+  	"manufacturer" : "yPa9vhh3LEamP3jff",
+  	"category" : "56d74cf0cfc554a227592fa2",
   	"rating" : [ ],
-  	"images" : [ ],
+  	"images" : {
+  		"EJSON$type" : "FS.File",
+  		"EJSON$value" : {
+  			"EJSON_id" : "y3dRkjHrTb92sxaw6",
+  			"EJSONcollectionName" : "images"
+  		}
+  	},
   	"colors" : [ ]
   },
   {
+  	"_id" : "56d74cf0cfc554a227592faa",
   	"name" : "Product 2",
   	"description" : "This product is amazing.",
   	"weight" : "123.0",
@@ -23,13 +31,20 @@
   	"length" : "123.0",
   	"price" : "123.0",
   	"stock" : "123",
-  	"manufacturer" : "manufacturer 2",
-  	"category" : "category 4",
+  	"manufacturer" : "bDggG4XeZGfEroz99",
+  	"category" : "56d74cf0cfc554a227592fa5",
   	"rating" : [ ],
-  	"images" : [ ],
+  	"images" : {
+  		"EJSON$type" : "FS.File",
+  		"EJSON$value" : {
+  			"EJSON_id" : "y3dRkjHrTb92sxaw6",
+  			"EJSONcollectionName" : "images"
+  		}
+  	},
   	"colors" : [ ]
   },
   {
+  	"_id" : "56d74cf0cfc554a227592fab",
   	"name" : "Product 3",
   	"description" : "This product is amazing.",
   	"weight" : "123.0",
@@ -38,13 +53,20 @@
   	"length" : "123.0",
   	"price" : "123.0",
   	"stock" : "123",
-  	"manufacturer" : "manufacturer 3",
-  	"category" : "category 1",
+  	"manufacturer" : "4TCpGRiGqbn5zx7ab",
+  	"category" : "56d74cf0cfc554a227592fa2",
   	"rating" : [ ],
-  	"images" : [ ],
+  	"images" : {
+  		"EJSON$type" : "FS.File",
+  		"EJSON$value" : {
+  			"EJSON_id" : "y3dRkjHrTb92sxaw6",
+  			"EJSONcollectionName" : "images"
+  		}
+  	},
   	"colors" : [ ]
   },
   {
+  	"_id" : "56d74cf0cfc554a227592fac",
   	"name" : "Product 4",
   	"description" : "This product is amazing.",
   	"weight" : "123.0",
@@ -53,13 +75,20 @@
   	"length" : "123.0",
   	"price" : "123.0",
   	"stock" : "123",
-  	"manufacturer" : "manufacturer 2",
-  	"category" : "category 3",
+  	"manufacturer" : "bDggG4XeZGfEroz99",
+  	"category" : "56d74cf0cfc554a227592fa4",
   	"rating" : [ ],
-  	"images" : [ ],
+  	"images" : {
+  		"EJSON$type" : "FS.File",
+  		"EJSON$value" : {
+  			"EJSON_id" : "y3dRkjHrTb92sxaw6",
+  			"EJSONcollectionName" : "images"
+  		}
+  	},
   	"colors" : [ ]
   },
   {
+  	"_id" : "56d74cf0cfc554a227592fad",
   	"name" : "Product 5",
   	"description" : "This product is amazing.",
   	"weight" : "123.0",
@@ -68,10 +97,16 @@
   	"length" : "123.0",
   	"price" : "123.0",
   	"stock" : "123",
-  	"manufacturer" : "manufacturer 1",
-  	"category" : "category 2",
+  	"manufacturer" : "yPa9vhh3LEamP3jff",
+  	"category" : "56d74cf0cfc554a227592fa3",
   	"rating" : [ ],
-  	"images" : [ ],
+  	"images" : {
+  		"EJSON$type" : "FS.File",
+  		"EJSON$value" : {
+  			"EJSON_id" : "y3dRkjHrTb92sxaw6",
+  			"EJSONcollectionName" : "images"
+  		}
+  	},
   	"colors" : [ ]
   }
 ]
