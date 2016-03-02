@@ -35,6 +35,18 @@ FlowRouter.route("/admin/categories",{
     renderLayoutWith(<CategoriesAdmin></CategoriesAdmin>)
   }
 });
+FlowRouter.route("/admin/manufacturers", {
+  name: "ManufacturersAdmin",
+  action(params){
+    renderLayoutWith(<ManufacturersAdmin />);
+  }
+});
+FlowRouter.route("/admin/brands", {
+  name: "BrandsAdmin",
+  action(params){
+    renderLayoutWith(<BrandsAdmin />);
+  }
+});
 /*function to render all the layouts with the main Component (Layout)*/
 function renderLayoutWith(component){
   ReactLayout.render(Main,{

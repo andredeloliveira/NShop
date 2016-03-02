@@ -29,6 +29,7 @@ ProductAdmin = React.createClass({
     this.state.modal.modal('hide');
   },
   render(){
+    var hasImages = this.props.product.images.length > 0;
     return(
   <div>
     <div className="column">
@@ -43,7 +44,7 @@ ProductAdmin = React.createClass({
                 </div>
               </div>
             </div>
-            <img src={this.props.product.images[0].url()} />
+            { hasImages ? <img src={this.props.product.images[0].url()} /> : null}
           </div>
           <div className="content">
             <p className="header">{this.props.product.name}</p>
