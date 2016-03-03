@@ -1,9 +1,11 @@
 Meteor.subscribe("brands");
+Meteor.subscribe("manufacturers");
 BrandsAdmin = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData(){
     return {
-      brands: Brands.find({}).fetch()
+      brands: Brands.find({}).fetch(),
+      manufacturers: Manufacturers.find({}).fetch()
     }
   },
   brandsRender(){
@@ -13,10 +15,19 @@ BrandsAdmin = React.createClass({
       );
     });
   },
+  manufacturersOptionsRender(){
+    return this.data.manufacturers.map( (manufacturer) => {
+      return( <option key={manufacturer._id} value={manufacturer._id}>
+                {manufacturer.name}
+              </option>
+            );
+    });
+  },
   onSubmit(event){
     event.preventDefault();
     newBrandObj = {
-      name: event.target.name.value
+      name: event.target.name.value,
+      manufacturer: event.target.manufacturer.value
     };
     var images = this.refs.images.returnFiles();
     var imageObj = Images.insert(images[0], (err, fileObj) => {
@@ -28,6 +39,7 @@ BrandsAdmin = React.createClass({
     newBrandObj.image = imageObj;
     Brands.insert(newBrandObj);
     event.target.name.value = '';
+    event.target.manufacturer.value= '';
     this.refs.images.cleanImages();
   },
   render(){
@@ -40,11 +52,17 @@ BrandsAdmin = React.createClass({
             <input type="text" name="name" placeholder="Name"/>
           </div>
           <div className="field">
-            <label>Brand</label>
+            <label>Logo</label>
             <div className="ui divider"></div>
             <div className="ui four column grid">
               <ImageField ref="images"/>
             </div>
+          </div>
+          <div className="field">
+            <label>Manufacturer</label>
+            <select className="ui fluid dropdown" name="manufacturer">
+              {this.manufacturersOptionsRender()}
+            </select>
           </div>
           <button className="ui button" type="submit">Submit</button>
        </form>
