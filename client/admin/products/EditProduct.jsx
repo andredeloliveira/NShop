@@ -1,19 +1,34 @@
 Meteor.subscribe("images");
-Meteor.subscribe("manufacturers");
+Meteor.subscribe("brands");
 Meteor.subscribe("categories");
 
 EditProduct = React.createClass({
 mixins: [ReactMeteorData],
 getMeteorData(){
   return{
-    manufacturer: Manufacturers.findOne(this.props.product.manufacturer),
-    manufacturers: Manufacturers.find({}).fetch(),
+    brand: Brands.findOne(this.props.product.brand),
+    brands: Brands.find({}).fetch(),
     category: Categories.findOne(this.props.product.category),
     categories: Categories.find({}).fetch()
   }
 },
   onSubmit(event){
     event.preventDefault();
+    function addImagesToDB(images){
+      var imagesToBeInserted = [];
+      for(var i =0; i< images.length; i++){
+        var pImage = Images.insert(images[i], (err, fileObj) => {
+          if(err){
+            console.error('duh');
+          }else {
+            console.log(pImage);
+            return fileObj;
+          }
+        });
+        imagesToBeInserted.push(pImage);
+      }
+      return imagesToBeInserted;
+    }
     /*get all the values again, into the object*/
     var newProductObj = {
       name: event.target.name.value,
@@ -24,26 +39,23 @@ getMeteorData(){
       length : event.target.length.value,
       price : event.target.price.value,
       stock: event.target.stock.value,
-      manufacturer: event.target.manufacturer.value,
-      category: event.target.category.value
+      brand: event.target.brand.value,
+      category: event.target.category.value,
+      images: this.props.product.images,
+      colors: this.props.product.colors
     };
     /*adds the images to the database.. I think it can be refactored to a
     single function that returns an Array with all the added images, but
     we still need to add the component to add into the db and another one for
     image buckets such as s3, etc*/
     var images = this.refs.images.returnFiles();
-    var imagesToBeInserted = [];
-    for(var i =0; i< images.length; i++){
-      var pImage = Images.insert(images[i], (err, fileObj) => {
-        if(err){
-          console.error('duh');
-        }else {
-          return fileObj;
-        }
-      });
-      imagesToBeInserted.push(pImage);
+    var colors = this.refs.colors.returnFiles();
+    if(images.length > 0) {
+      newProductObj.images = addImagesToDB(images);
     }
-    newProductObj.images = imagesToBeInserted;
+    if(colors.length > 0){
+      newProductObj.colors= addImagesToDB(colors);
+    }
 
     Products.update({_id: this.props.product._id}, {$set:
       {
@@ -55,9 +67,10 @@ getMeteorData(){
         'length': newProductObj.length,
         'price': newProductObj.price,
         'stock': newProductObj.stock,
-        'manufacturer' : newProductObj.manufacturer,
+        'brand' : newProductObj.brand,
         'category' : newProductObj.category,
-        'images': newProductObj.images
+        'images': newProductObj.images,
+        'colors': newProductObj.colors
       }
     });
     /*after everything, closes the modal*/
@@ -68,11 +81,16 @@ getMeteorData(){
       return <img key={index} src={image.url()} className="adminImage" />
     });
   },
-  manufacturersOptionsRender(){
-    return this.data.manufacturers.map((manufacturer) => {
+  actualColorsRender(){
+    return this.props.product.colors.map( (image, index) => {
+      return <img key={index} src={image.url()} className="adminImage" />
+    });
+  },
+  brandsOptionsRender(){
+    return this.data.brands.map((brand) => {
       return (
-          <option key={manufacturer._id} value={manufacturer._id}>
-            {manufacturer.name}
+          <option key={brand._id} value={brand._id}>
+            {brand.name}
           </option>
       );
     });
@@ -130,10 +148,10 @@ getMeteorData(){
             <input type="number" placeholder="Quantity in Stock" name="stock" defaultValue={this.props.product.stock} />
         </div>
         <div className="field">
-            <label>Manufacturer</label>
-            <select className="ui fluid dropdown" name="manufacturer">
-              <option value={this.data.manufacturer._id}>{this.data.manufacturer.name}</option>
-              {this.manufacturersOptionsRender()}
+            <label>Brand</label>
+            <select className="ui fluid dropdown" name="brand">
+              <option value={this.data.brand._id}>{this.data.brand.name}</option>
+              {this.brandsOptionsRender()}
             </select>
         </div>
         <div className="field">
@@ -156,6 +174,19 @@ getMeteorData(){
             <ImageField ref="images" />
           </div>
           </div>
+          <div className="field">
+            <label>Colors</label>
+            <div>
+              <h1>Actual Colors</h1>
+              <br></br>
+              <div>
+                {this.actualColorsRender()}
+              </div>
+            </div>
+            <div>
+              <ImageField ref="colors" />
+            </div>
+            </div>
         <button className="ui button" type="submit" >Update</button>
      </form>
 

@@ -23,8 +23,14 @@ EditBrand = React.createClass({
     this.props.close();
   },
   render(){
+    style ={
+      marginTop: '30px',
+      marginLeft: '30px',
+      marginRight: '30px',
+      marginBottom: '50px'
+    };
     return(
-      <div>
+      <div style={style}>
         <h1>Edit Brand</h1>
         <form onSubmit={this.onSubmit} className="ui form" >
           <div className="field">

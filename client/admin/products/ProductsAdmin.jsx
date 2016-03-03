@@ -2,7 +2,7 @@
 Meteor.subscribe("images");
 Meteor.subscribe("products");
 Meteor.subscribe("categories");
-Meteor.subscribe("manufacturers");
+Meteor.subscribe("brands");
 ProductsAdmin = React.createClass({
   mixins: [ReactMeteorData],
   getInitialState(){
@@ -14,14 +14,11 @@ ProductsAdmin = React.createClass({
     let query = {};
     return {
       products: Products.find({}).fetch(),
-      manufacturers: Manufacturers.find({}).fetch(),
+      brands: Brands.find({}).fetch(),
       categories: Categories.find({}).fetch()
     }
   },
 
-  componentWillUpdate(){
-    console.log("cadê");
-  },
   productsRender(){
     return this.data.products.map((product) =>{
       return (
@@ -29,11 +26,11 @@ ProductsAdmin = React.createClass({
       );
     });
   },
-  manufacturersOptionsRender(){
-    return this.data.manufacturers.map((manufacturer) => {
+  brandsOptionsRender(){
+    return this.data.brands.map((brand) => {
       return (
-          <option key={manufacturer._id} value={manufacturer._id}>
-            {manufacturer.name}
+          <option key={brand._id} value={brand._id}>
+            {brand.name}
           </option>
       );
     });
@@ -74,7 +71,7 @@ ProductsAdmin = React.createClass({
        length : event.target.length.value,
        price : event.target.price.value,
        stock: event.target.stock.value,
-       manufacturer: event.target.manufacturer.value,
+       brand: event.target.brand.value,
        category: event.target.category.value,
        rating: [],
        images: []
@@ -100,7 +97,7 @@ ProductsAdmin = React.createClass({
         console.log('sucess!');
       }
     });
-    /*after that, clean the data on the forms*/
+    /*after that, clean the data on the form*/
     event.target.name.value = '';
     event.target.description.value = '';
     event.target.weight.value = '';
@@ -111,6 +108,7 @@ ProductsAdmin = React.createClass({
     event.target.stock.value = '';
     this.setState({updated: true});
     this.refs.images.cleanImages();
+    this.refs.colors.cleanImages();
 
   },
   onDrop(files){
@@ -159,9 +157,9 @@ ProductsAdmin = React.createClass({
               <input type="number" placeholder="Quantity in Stock" name="stock"/>
           </div>
           <div className="field">
-              <label>Manufacturer</label>
-              <select className="ui fluid dropdown" name="manufacturer">
-                {this.manufacturersOptionsRender()}
+              <label>Brand</label>
+              <select className="ui fluid dropdown" name="brand">
+                {this.brandsOptionsRender()}
               </select>
           </div>
           <div className="field">
