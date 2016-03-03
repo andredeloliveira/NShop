@@ -1,5 +1,5 @@
-Brands = new Mongo.Collection("brands"); 
-CollectionName.allow({
+Brands = new Mongo.Collection("brands");
+Brands.allow({
   insert: function(){
     return true;
   },

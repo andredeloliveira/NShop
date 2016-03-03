@@ -11,6 +11,11 @@ ImageField = React.createClass({
       files: []
     }
   },
+  cleanImages(){
+    this.setState({
+      files: []
+    });
+  },
   /*If the user wants to delete any undesired picture that he/she might uploaded,
   this method will remove it*/
   removeImage(idx,e){

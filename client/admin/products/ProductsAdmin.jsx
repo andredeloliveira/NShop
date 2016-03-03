@@ -18,7 +18,7 @@ ProductsAdmin = React.createClass({
       categories: Categories.find({}).fetch()
     }
   },
-  
+
   componentWillUpdate(){
     console.log("cadê");
   },
@@ -110,7 +110,7 @@ ProductsAdmin = React.createClass({
     event.target.price.value = '';
     event.target.stock.value = '';
     this.setState({updated: true});
-
+    this.refs.images.cleanImages();
 
   },
   onDrop(files){
