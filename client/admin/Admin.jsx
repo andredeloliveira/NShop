@@ -7,31 +7,51 @@ Admin = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     return {
-      products: Products.find({}).fetch(),
-      categories: Categories.find({}).fetch(),
-      manufacturers: Manufacturers.find({}).fetch(),
-      brands: Brands.find({}).fetch()
+      products: {
+        name: 'products',
+        object: Products.find({}).fetch(),
+        columns: ['Name', 'Description']
+      },
+      categories: {
+        name: 'categories',
+        object: Categories.find({}).fetch(),
+        columns: ['Name', 'Description']
+      },
+      manufacturers: {
+        name: 'manufacturers',
+        object: Manufacturers.find({}).fetch(),
+        columns: ['Name', 'Description']
+      },
+      brands: {
+        name: 'brands',
+        object: Brands.find({}).fetch(),
+        columns: ['Name', 'Description']
+      }
     }
   },
   categoriesHeader() {
     return (
       <tr>
-        <th>Name</th>
-        <th>Description</th>
+        { this.data.categories.columns.map((column) => {
+            return (
+              <th> { column }</th>
+            );
+          })
+        }
         <th></th>
       </tr>
     );
   },
   categoriesBody(){
-    return this.data.categories.map((category) =>{
+    return this.data.categories.object.map((category) =>{
         return (
           <tr>
             <td>{ category.name }</td>
             <td>{ category.description }</td>
-            <td className="single line">
-              <span><i className="large unhide icon"></i></span>
-              <span><i className="large edit icon"></i></span>
-              <span><i className="large remove icon"></i></span>
+            <td className="single line center aligned">
+              <a href="#"><i className="large unhide icon"></i></a>
+              <a href="#"><i className="large edit icon"></i></a>
+              <a href="#"><i className="large remove icon"></i></a>
             </td>
           </tr>
         );
@@ -39,12 +59,23 @@ Admin = React.createClass({
   },
   menuItems() {
     var items = [
-      { name: 'Products', icon: 'shop icon', size: this.data.products.length, class: "active item" },
-      { name: 'Categories', icon: 'unordered list icon', size: this.data.categories.length, class: "item" },
-      { name: 'Manufacturers', icon: 'configure icon', size: this.data.manufacturers.length, class: "item" },
-      { name: 'Brands', icon: 'barcode icon', size: this.data.brands.length, class: "item" },
-      { name: 'Promotions', icon: 'announcement icon', size: 0, class: "item" },
-      { name: 'Videos', icon: 'film icon', size: 0, class: "item" }
+      { name: 'Products', icon: 'shop icon', class: "item",
+        size: this.data.products.object.length },
+
+      { name: 'Categories', icon: 'unordered list icon', class: "active item",
+        size: this.data.categories.object.length },
+
+      { name: 'Manufacturers', icon: 'configure icon', class: "item",
+        size: this.data.manufacturers.object.length },
+
+      { name: 'Brands', icon: 'barcode icon', class: "item",
+        size: this.data.brands.object.length },
+
+      { name: 'Promotions', icon: 'announcement icon', class: "item",
+        size: 0 },
+
+      { name: 'Videos', icon: 'film icon', class: "item",
+        size: 0 }
     ];
     return (
       <div className="ui vertical pointing menu">
@@ -69,12 +100,14 @@ Admin = React.createClass({
         </div>
         <div className="twelve wide stretched column">
           <div className="ui segment">
-            <div className="ui vertical animated primary button" tabindex="0">
+            <h1 className="ui center aligned header">Categories</h1>
+
+            <a className="ui vertical animated primary button" tabindex="0" href="/admin/categories">
               <div className="hidden content">Add</div>
               <div className="visible content">
                 <i className="plus icon"></i>
               </div>
-            </div>
+            </a>
             <table className="ui compact celled table">
               <thead>
                 { this.categoriesHeader() }
@@ -83,7 +116,6 @@ Admin = React.createClass({
                 { this.categoriesBody() }
               </tbody>
             </table>
-
           </div>
         </div>
       </div>
