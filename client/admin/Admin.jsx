@@ -8,49 +8,82 @@ Admin = React.createClass({
     };
 
     return(
-      <div>
-          <div className="ui four column grid">
-            <div className="column">
-              <div className="ui fluid card">
-                <a className="image" href="/admin/products"  >
-                  <img src="../resources/box.png" />
-                </a>
-                <div className="content">
-                  <a className="header" href="/admin/products" >Products</a>
-                </div>
+      <div className="ui grid">
+        <div className="four wide column">
+          <div className="ui vertical fluid pointing menu">
+            <a className="active item">
+              <span><i className="shop icon"></i></span>
+              Products
+              <div className="ui label">51</div>
+            </a>
+            <a className="item">
+              <span><i className="unordered list icon"></i></span>
+              Categories
+              <div className="ui label">4</div>
+            </a>
+            <a className="item">
+              <span><i className="configure icon"></i></span>
+              Manufactures
+              <div className="ui label">12</div>
+            </a>
+            <a className="item">
+              <span><i className="barcode icon"></i></span>
+              Brands
+              <div className="ui label">23</div>
+            </a>
+            <a className="item">
+              <span><i className="announcement icon"></i></span>
+              Promotions
+              <div className="ui label">1</div>
+            </a>
+            <a className="item">
+              <span><i className="film icon"></i></span>
+              Videos
+              <div className="ui label">0</div>
+            </a>
+          </div>
+        </div>
+        <div className="twelve wide stretched column">
+          <div className="ui segment">
+            <div className="ui vertical animated primary button" tabindex="0">
+              <div className="hidden content">Add</div>
+              <div className="visible content">
+                <i className="plus icon">
               </div>
             </div>
-            <div className="column">
-              <div className="ui fluid card">
-                <a className="image" href="/admin/categories">
-                  <img src="../resources/products.png"/>
-                </a>
-                <div className="content">
-                  <a className="header" href="/admin/categories">Categories</a>
-                </div>
-              </div>
-            </div>
-            <div className="column">
-              <div className="ui fluid card">
-                <a className="image" href="/admin/promotions">
-                  <img src="../resources/promotions.png"/>
-                </a>
-                <div className="content">
-                  <a className="header" href="/admin/promotions">Promotions</a>
-                </div>
-              </div>
-            </div>
-            <div className="column">
-              <div className="ui fluid card">
-                <a className="image" href="admin/videos">
-                  <img src="../resources/video.png"/>
-                </a>
-                <div className="content">
-                  <a className="header" href="/admin/videos">Videos</a>
-                </div>
-              </div>
-            </div>
-          </div >
+
+            <table className="ui compact celled table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Weight</th>
+                  <th>Size</th>
+                  <th>Price</th>
+                  <th>In Stock</th>
+                  <th>Brand</th>
+                  <th>Category</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <td>Dummy Product</td>
+                <td>Creatine is the reference compound for power improvement, with numbers from one meta-analysis to assess potency</td>
+                <td>123</td>
+                <td className="single line">12 x 12 x 12</td>
+                <td>$12.00</td>
+                <td>454</td>
+                <td>Fake Company</td>
+                <td>Falsified</td>
+                <td className="single line">
+                  <span><i className="large unhide icon"></i></span>
+                  <span><i className="large edit icon"></i></span>
+                  <span><i className="large remove icon"></i></span>
+                </td>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     );
   }
