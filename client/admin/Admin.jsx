@@ -1,5 +1,18 @@
-Admin = React.createClass({
+Meteor.subscribe("products");
+Meteor.subscribe("categories");
+Meteor.subscribe("manufacturers");
+Meteor.subscribe("brands");
 
+Admin = React.createClass({
+  mixins: [ReactMeteorData],
+  getMeteorData() {
+    return {
+      products: Products.find({}).fetch(),
+      categories: Categories.find({}).fetch(),
+      manufacturers: Manufacturers.find({}).fetch(),
+      brands: Brands.find({}).fetch()
+    }
+  },
   render(){
     var iconSize = {
       fontSize: '9em',
@@ -10,31 +23,39 @@ Admin = React.createClass({
     return(
       <div className="ui grid">
         <div className="four wide column">
-          <div className="ui vertical fluid pointing menu">
+          <div className="ui vertical pointing menu">
             <a className="active item">
               <span><i className="shop icon"></i></span>
               Products
-              <div className="ui label">51</div>
+              <div className="ui label">
+                { this.data.products.length }
+              </div>
             </a>
             <a className="item">
               <span><i className="unordered list icon"></i></span>
               Categories
-              <div className="ui label">4</div>
+              <div className="ui label">
+                { this.data.categories.length }
+              </div>
             </a>
             <a className="item">
               <span><i className="configure icon"></i></span>
               Manufactures
-              <div className="ui label">12</div>
+              <div className="ui label">
+                { this.data.manufacturers.length }
+              </div>
             </a>
             <a className="item">
               <span><i className="barcode icon"></i></span>
               Brands
-              <div className="ui label">23</div>
+              <div className="ui label">
+                { this.data.brands.length }
+              </div>
             </a>
             <a className="item">
               <span><i className="announcement icon"></i></span>
               Promotions
-              <div className="ui label">1</div>
+              <div className="ui label">0</div>
             </a>
             <a className="item">
               <span><i className="film icon"></i></span>
@@ -48,7 +69,7 @@ Admin = React.createClass({
             <div className="ui vertical animated primary button" tabindex="0">
               <div className="hidden content">Add</div>
               <div className="visible content">
-                <i className="plus icon">
+                <i className="plus icon"></i>
               </div>
             </div>
 
