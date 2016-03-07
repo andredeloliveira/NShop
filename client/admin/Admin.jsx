@@ -29,40 +29,50 @@ Admin = React.createClass({
       }
     }
   },
-  categoriesHeader() {
-    return (
-      <tr>
-        { this.data.categories.columns.map((column) => {
-            return (
-              <th> { column }</th>
-            );
-          })
-        }
-        <th></th>
-      </tr>
-    );
+  getInitialState(){
+    return {
+      showMe: null
+    }
   },
-  categoriesBody(){
-    return this.data.categories.object.map((category) =>{
-        return (
-          <tr>
-            <td>{ category.name }</td>
-            <td>{ category.description }</td>
-            <td className="single line center aligned">
-              <a href="#"><i className="large unhide icon"></i></a>
-              <a href="#"><i className="large edit icon"></i></a>
-              <a href="#"><i className="large remove icon"></i></a>
-            </td>
-          </tr>
-        );
+  showItem(index,event){
+    this.setState({
+      showMe: index
     });
   },
+  renderChosenOption(){
+    var result = null;
+    switch (this.state.showMe) {
+      case 0:
+        result = <div><h1>PRoducts</h1></div>;
+        break;
+      case 1:
+        result = <CategoriesAdmin categories={this.data.categories} />;
+        break;
+      case 2:
+        result = <div><h1>Manufacturers</h1></div>;
+        break;
+      case 3 :
+        result = <div><h1>Brands</h1></div>;
+        break;
+      case 4:
+        result = <div><h1>Promotions</h1></div>;
+        break;
+      case 5:
+        result = <div><h1>Videos</h1></div>;
+        break;
+      default:
+        result = null;
+        break;
+    }
+    return result;
+  },
   menuItems() {
+
     var items = [
       { name: 'Products', icon: 'shop icon', class: "item",
         size: this.data.products.object.length },
 
-      { name: 'Categories', icon: 'unordered list icon', class: "active item",
+      { name: 'Categories', icon: 'unordered list icon', class: "item",
         size: this.data.categories.object.length },
 
       { name: 'Manufacturers', icon: 'configure icon', class: "item",
@@ -77,11 +87,12 @@ Admin = React.createClass({
       { name: 'Videos', icon: 'film icon', class: "item",
         size: 0 }
     ];
+
     return (
       <div className="ui vertical pointing menu">
-        { items.map((item) => {
+        { items.map((item, index) => {
             return (
-              <a className={ item.class }>
+              <a key={item.name} className={ item.class } id={item.name} index={index} onClick={this.showItem.bind(this, index)}  >
                 <span><i className={ item.icon } ></i></span>
                 { item.name }
                 <div className="ui label"> { item.size } </div>
@@ -100,22 +111,7 @@ Admin = React.createClass({
         </div>
         <div className="twelve wide stretched column">
           <div className="ui segment">
-            <h1 className="ui center aligned header">Categories</h1>
-
-            <a className="ui vertical animated primary button" tabindex="0" href="/admin/categories">
-              <div className="hidden content">Add</div>
-              <div className="visible content">
-                <i className="plus icon"></i>
-              </div>
-            </a>
-            <table className="ui compact celled table">
-              <thead>
-                { this.categoriesHeader() }
-              </thead>
-              <tbody>
-                { this.categoriesBody() }
-              </tbody>
-            </table>
+              {this.renderChosenOption()}
           </div>
         </div>
       </div>
