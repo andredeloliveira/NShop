@@ -25,7 +25,7 @@ Admin = React.createClass({
       brands: {
         name: 'brands',
         object: Brands.find({}).fetch(),
-        columns: ['Name', 'Description']
+        columns: ['Name', 'Manufacturer']
       }
     }
   },
@@ -52,7 +52,7 @@ Admin = React.createClass({
         result = <div><h1>Manufacturers</h1></div>;
         break;
       case 3 :
-        result = <div><h1>Brands</h1></div>;
+        result = <BrandsAdmin brands={this.data.brands} /> ;
         break;
       case 4:
         result = <div><h1>Promotions</h1></div>;

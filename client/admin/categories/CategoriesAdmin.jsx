@@ -1,7 +1,7 @@
 CategoriesAdmin = React.createClass({
   renderHeader(){
-    return this.props.categories.columns.map( (column) =>{
-      return <CategoriesAdminHeader column={column} key={column.name} /> ;
+    return this.props.categories.columns.map( (column, index) =>{
+      return <CategoriesAdminHeader key={index} column={column}  /> ;
     });
   },
   renderBody(){
