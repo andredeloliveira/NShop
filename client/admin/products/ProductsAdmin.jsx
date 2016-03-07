@@ -62,6 +62,9 @@ ProductsAdmin = React.createClass({
       }
       return imagesToBeInserted;
     }
+    /*create a class constructor that has the getRating function inside.
+      it is in here just to make it work.
+    */
     var productObject = {
        name : event.target.name.value,
        description : event.target.description.value,
@@ -73,7 +76,11 @@ ProductsAdmin = React.createClass({
        stock: event.target.stock.value,
        brand: event.target.brand.value,
        category: event.target.category.value,
-       rating: [],
+       /*internal function that calculates the rating*/
+       rating: {
+         avgRate: 0,
+         nRates: 0
+       },
        images: []
     };
     /*adds the images to the database.. I think it can be refactored to a

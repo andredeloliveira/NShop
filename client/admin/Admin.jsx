@@ -102,20 +102,8 @@ Admin = React.createClass({
           <div className="ui segment">
             <h1 className="ui center aligned header">Categories</h1>
 
-            <a className="ui vertical animated primary button" tabindex="0" href="/admin/categories">
-              <div className="hidden content">Add</div>
-              <div className="visible content">
-                <i className="plus icon"></i>
-              </div>
-            </a>
-            <table className="ui compact celled table">
-              <thead>
-                { this.categoriesHeader() }
-              </thead>
-              <tbody>
-                { this.categoriesBody() }
-              </tbody>
-            </table>
+            
+              <CategoriesAdmin categories={this.data.categories} />
           </div>
         </div>
       </div>

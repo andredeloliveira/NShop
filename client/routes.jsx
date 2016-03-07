@@ -20,7 +20,17 @@ FlowRouter.route("/register", {
 FlowRouter.route("/admin",{
     name: "Admin",
     action(params){
-      renderLayoutWith(<Admin/>);
+      models = [
+        {
+          model: Products,
+          name:  'products'
+        },
+        {
+          model: Categories,
+          name: 'categories'
+        }
+      ];
+      renderLayoutWith(<Admin models={models} />);
     }
 });
 FlowRouter.route("/admin/products", {
