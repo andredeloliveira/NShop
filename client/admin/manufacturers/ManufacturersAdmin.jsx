@@ -1,51 +1,49 @@
-/*Component for Categories on the Admin view*/
-Meteor.subscribe("images");
-Meteor.subscribe("manufacturers")
 ManufacturersAdmin = React.createClass({
-  mixins: [ReactMeteorData],
-  getMeteorData(){
-    return {
-      manufacturers: Manufacturers.find({}).fetch()
-    }
-  },
-  renderManufacturers(){
-    return this.data.manufacturers.map((manufacturer) =>{
-        return (
-          <ManufacturerAdmin key={manufacturer._id} manufacturer={manufacturer} />
-        );
+  renderHeader(){
+    return this.props.manufacturers.columns.map( (column, index) =>{
+      return <ManufacturerAdminHeader key={index} column={column}  /> ;
     });
   },
-  onSubmit(event){
-    event.preventDefault();
-    var manufacturerObject = {
-      name: event.target.name.value,
-    };
-
-    Manufacturers.insert(manufacturerObject);
-    console.log("sucess!", manufacturerObject);
-    event.target.name.value= '';
+  renderBody(){
+    return this.props.manufacturers.object.map( (manufacturer) => {
+        return <ManufacturerAdminBody manufacturer={manufacturer} key={manufacturer._id} />
+    });
+  },
+  toggleAdd(event){
+    this.state.modal.modal('show');
+  },
+  componentDidMount(){
+    this.setState({
+      modal: $("#AddManufacturer").modal({detachable: false})
+    })
+  },
+  closeAdd(){
+    this.state.modal.modal('hide');
   },
   render(){
     return(
       <div>
-        <h1>Manage Manufacturers</h1>
-        <form onSubmit={this.onSubmit} className="ui form">
-          <div className="field">
-            <label>Name</label>
-            <input type="text" name="name" placeholder="Name"/>
+        <button className="ui vertical animated primary button" tabIndex="0"  onClick={this.toggleAdd}>
+          <div className="hidden content">Add</div>
+          <div className="visible content">
+            <i className="plus icon"></i>
           </div>
-          <button className="ui button" type="submit">Submit</button>
-        </form>
-        <div>
-          <div className="ui divider"></div>
-          <h2>Manufacturers</h2>
-          <div className="ui divider"></div>
-           <div className="ui two column grid">
-             {this.renderManufacturers()}
-           </div>
-        </div>
-
+        </button>
+      <table className="ui compact celled table">
+        <thead>
+          <tr>
+              { this.renderHeader() }
+          <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          { this.renderBody() }
+        </tbody>
+      </table>
+      <div className="ui modal ediform" id="AddManufacturer">
+        <AddManufacturer close={this.closeAdd}/>
       </div>
+    </div>
     );
   }
 });

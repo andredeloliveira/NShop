@@ -31,7 +31,7 @@ Admin = React.createClass({
   },
   getInitialState(){
     return {
-      showMe: null
+      showMe: 0
     }
   },
   showItem(index,event){
@@ -43,13 +43,13 @@ Admin = React.createClass({
     var result = null;
     switch (this.state.showMe) {
       case 0:
-        result = <div><h1>PRoducts</h1></div>;
+        result = <ProductsAdmin products={this.data.products} />;
         break;
       case 1:
         result = <CategoriesAdmin categories={this.data.categories} />;
         break;
       case 2:
-        result = <div><h1>Manufacturers</h1></div>;
+        result = <ManufacturersAdmin manufacturers={this.data.manufacturers} />;
         break;
       case 3 :
         result = <BrandsAdmin brands={this.data.brands} /> ;
