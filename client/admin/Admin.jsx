@@ -91,6 +91,9 @@ Admin = React.createClass({
     return (
       <div className="ui vertical pointing menu">
         { items.map((item, index) => {
+          if(this.state.showMe === index){
+            item.class = "active item";
+          }
             return (
               <a key={item.name} className={ item.class } id={item.name} index={index} onClick={this.showItem.bind(this, index)}  >
                 <span><i className={ item.icon } ></i></span>
