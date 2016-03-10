@@ -21,7 +21,6 @@ getMeteorData(){
           if(err){
             console.error('duh');
           }else {
-            console.log(pImage);
             return fileObj;
           }
         });
@@ -111,7 +110,6 @@ getMeteorData(){
       marginRight: '30px',
       marginBottom: '50px'
     };
-    console.log(this.data.category);
     return(
     <div style={style}>
       <h1>Manage Products</h1>

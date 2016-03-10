@@ -1,3 +1,6 @@
+/*we can add the quick look option here in the next update. For now, it will stay
+  inactive due to design decisions
+*/
 Product = React.createClass({
   getRating(){
     var avg = this.props.product.rating.avgRate;
@@ -19,7 +22,9 @@ Product = React.createClass({
     };
     this.setState(data);
   },
-
+  quickLook(event){
+    this.state.quickLook.modal('show');
+  },
   render(){
     var shownImage = this.props.product.images[0].url();
     var hiddenImage = '';
@@ -34,21 +39,17 @@ Product = React.createClass({
           <img src={hiddenImage} className="hidden content" />
         </div>
         <div className="content">
-          <a className="header">{this.props.product.name}</a>
+          <a className="header" href={'/products/'+this.props.product._id}>{this.props.product.name}</a>
           <div className="meta">
             <span className="date">$ {this.props.product.price}</span>
-          </div>
-        </div>
-        <div className="extra content">
-          <div>
-            <button className="ui button">
-              Quick Look
-            </button>
           </div>
         </div>
         <div className="extra">
             <div className="ui star rating" id={'rating' + this.props.product._id}
                data-rating={this.getRating()} data-max-rating="5" ></div>
+        </div>
+        <div className="ui modal" id={'modal' + this.props.product._id}>
+
         </div>
       </div>
       </div>

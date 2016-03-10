@@ -3,7 +3,7 @@ BrandsAdminBody = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData(){
     return {
-      manufacturer: Manufacturers.findOne(this.props.brand.manufacturer)
+      manufacturer: Manufacturers.findOne({_id: this.props.brand.manufacturer})
     }
   },
   toggleEdit(event){
@@ -28,7 +28,8 @@ BrandsAdminBody = React.createClass({
 
       <tr>
         <td>{ this.props.brand.name }</td>
-        <td>{ this.data.manufacturer.name }</td>
+        {this.data.manufacturer ? <td>{ this.data.manufacturer.name }</td> :
+          <strong>no data</strong>}
         <td className="single line center aligned">
           <a href=""><i className="large unhide icon"></i></a>
           <a href="" onClick={this.toggleEdit}><i className="large edit icon"></i></a>

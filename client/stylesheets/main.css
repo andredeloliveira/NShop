@@ -2,3 +2,16 @@
   width: 100px;
   height: 100px;
 }
+.socialMedia {
+  font-size: 80px;
+}
+.price {
+  font-size: 4em !important;
+  color: green !important;
+}
+.inStock {
+  color: rgba(43,160,17,1);
+}
+.outOfStock {
+  color: #FF0000 !important;
+}
