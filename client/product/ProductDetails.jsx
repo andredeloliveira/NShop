@@ -5,6 +5,17 @@ ProductDetails = React.createClass({
         mainImage: this.data.product.images[index]
       });
   },
+  //we can leave this as a Product function inside the Constructor.. that still we be done.
+  //I hope to erase this message in the next commit
+  getRating(){
+    var avg = this.data.product.rating.avgRate;
+    var nRates = this.data.product.rating.nRates;
+    var result = 0;
+    if(avg !== 0 && nRates !== 0){
+       result = Math.ceil(avg / nRates);
+    }
+    return result;
+  },
   getMeteorData(){
     var handleProduct = Meteor.subscribe("products");
     var handleBrand = Meteor.subscribe("brands");
@@ -57,6 +68,12 @@ ProductDetails = React.createClass({
               <div className="row">
                 <div className="column">
                   <input type="number" name="quantity"/>
+                </div>
+              </div>
+              <div className="row">
+                <div className="column">
+                  <div className="ui star massive rating" id={'rating' + this.data.product._id}
+                     data-rating={this.getRating()} data-max-rating="5" ></div>
                 </div>
               </div>
             </div>
