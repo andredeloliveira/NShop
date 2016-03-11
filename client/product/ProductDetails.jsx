@@ -1,5 +1,27 @@
 ProductDetails = React.createClass({
   mixins:[ReactMeteorData],
+  getMeteorData(){
+    var handleProduct = Meteor.subscribe("products");
+    var handleBrand = Meteor.subscribe("brands");
+    return {
+      isLoadingProduct: ! handleProduct.ready(),
+      isLoadingBrand: ! handleBrand.ready(),
+      product: Products.findOne(this.props.product),
+
+    }
+  },
+  closeModal(event){
+    this.state.modal.modal('hide');
+  },
+  addToCart(event){
+    /*first verify if the user is logged in. If not, we open a modal with
+    the requisition.
+    */
+    if(! Meteor.user()){
+      console.log('it came here, god dammit');
+      this.state.modal.modal('show');
+    }
+  },
   showImageonSlider(index, event){
       this.setState({
         mainImage: this.data.product.images[index]
@@ -16,20 +38,12 @@ ProductDetails = React.createClass({
     }
     return result;
   },
-  getMeteorData(){
-    var handleProduct = Meteor.subscribe("products");
-    var handleBrand = Meteor.subscribe("brands");
-    return {
-      isLoadingProduct: ! handleProduct.ready(),
-      isLoadingBrand: ! handleBrand.ready(),
-      product: Products.findOne(this.props.product),
 
-    }
-  },
   componentDidMount(){
     var state = {} ;
     state.mainImage = this.data.product.images[0];
     state.rating = $('#'+'rating'+this.data.product._id).rating({interactive: false});
+    state.modal = $('#loginModalProduct').modal({detachable: false});
     this.setState(state);
   },
   allImagesRender(){
@@ -42,6 +56,7 @@ ProductDetails = React.createClass({
     });
   },
   render(){
+
     return (
       <div className="ui grid">
         <div className="two column row">
@@ -80,7 +95,7 @@ ProductDetails = React.createClass({
             <div className="ui centered aligned grid">
               <div className="row">
                   <div className="sixteen wide column">
-                    <button className="fluid ui button">Add to bag</button>
+                    <button className="fluid ui button" onClick={this.addToCart}>Add to bag</button>
                   </div>
               </div>
               <div className="row">
@@ -93,6 +108,9 @@ ProductDetails = React.createClass({
             {this.allImagesRender()}
         </div>
           <Colours colours={this.data.product.colors} ref="colours"/>
+          <div className="ui modal editform" id="loginModalProduct">
+            <LoginForm closeModal={this.closeModal}/>
+          </div>
       </div>
     );
   }

@@ -14,3 +14,8 @@ Meteor.publish("categories", function(){
 Meteor.publish("brands", function(){
   return Brands.find({});
 });
+Meteor.publish("shoppingcart", function(){
+  return ShoppingCart.find({
+    owner: this.userId
+  });
+});

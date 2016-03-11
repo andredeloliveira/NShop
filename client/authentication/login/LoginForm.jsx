@@ -30,15 +30,21 @@ LoginForm = React.createClass({
         this.setErrorState(err);
 
       }else {
-        FlowRouter.go('Home');
+        if(FlowRouter.current().name === 'Login')
+          console.log(FlowRouter.current().name)
       }
     });
   },
   render(){
+    loginStyle = {
+      margin: '30px'
+    };
     return(
     <div>
-      <LoginWithFacebookButton/>
-      <div className="ui form error">
+      {this.props.closeModal ?
+        <LoginWithFacebookButton closeModal={this.props.closeModal}/>
+        : <LoginWithFacebookButton />}
+      <div style={loginStyle} className="ui form error">
         <form onSubmit={this.onSubmit}>
           <div className="field">
             <label>E-mail</label>
@@ -51,6 +57,9 @@ LoginForm = React.createClass({
           {this.errorRender()}
           <div>
             <input type="submit" value="Login" className="ui blue basic button"/>
+            {this.props.closeModal ?
+              <button className="ui red basic button" onClick={this.props.closeModal}>Close</button>:
+            null}
           </div>
         </form>
       </div>

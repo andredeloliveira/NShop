@@ -53,7 +53,12 @@ FlowRouter.route("/admin/brands", {
     renderLayoutWith(<BrandsAdmin />);
   }
 });
-
+FlowRouter.route("/mycart", {
+  name: "mycart",
+  action(params){
+    renderLayoutWith(<ShoppingCart />)
+  }
+});
 /*function to render all the layouts with the main Component (Layout)*/
 function renderLayoutWith(component){
   ReactLayout.render(Main,{

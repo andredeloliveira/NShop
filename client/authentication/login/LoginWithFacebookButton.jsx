@@ -13,7 +13,11 @@ LoginWithFacebookButton = React.createClass({
       if(err){
         this.setErrorState(err);
       }else{
-        FlowRouter.go('Home');
+        if(! this.props.closeModal){
+          FlowRouter.go('Home');
+        }else {
+          this.props.closeModal();
+        }
       }
     });
   },

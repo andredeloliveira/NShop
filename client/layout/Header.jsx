@@ -2,8 +2,10 @@ Header = React.createClass({
   mixins: [ReactMeteorData],
   /*gets the data and put into this.data.[property]*/
   getMeteorData(){
+    var shoppingCartItemsHandler = Meteor.subscribe("shoppingcart");
     return {
-      currentUser: Meteor.user()
+      currentUser: Meteor.user(),
+      shoppingCartItems: ShoppingCart.find({}).count()
     }
   },
   handleLogout(){
@@ -28,6 +30,7 @@ Header = React.createClass({
         <div className="right menu">
         {logoutButton}
         {loginButtons}
+        <ShoppingCartHeader nItems={this.data.shoppingCartItems}/>
         </div>
       </div>
     );
