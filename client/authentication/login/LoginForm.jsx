@@ -30,8 +30,11 @@ LoginForm = React.createClass({
         this.setErrorState(err);
 
       }else {
-        if(FlowRouter.current().name === 'Login')
-          console.log(FlowRouter.current().name)
+        if(! this.props.closeModal){
+          FlowRouter.go("Home");
+        }else{
+          this.props.closeModal();
+        }
       }
     });
   },

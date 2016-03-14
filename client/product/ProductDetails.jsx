@@ -13,14 +13,67 @@ ProductDetails = React.createClass({
   closeModal(event){
     this.state.modal.modal('hide');
   },
+  /*this function is waay to long. Needs to be refactored*/
   addToCart(event){
+    /*this also to need rewritten somewhere else. But for now it passes the tests*/
+    function productExists(items, itemToVerify){
+      let exists = false;
+      for(var i=0; i< items.length; i++){
+        if(items[i]._id === itemToVerify){
+          exists = true;
+          break;
+        }
+      }
+      return exists;
+    };
     /*first verify if the user is logged in. If not, we open a modal with
     the requisition.
     */
     if(! Meteor.user()){
-      console.log('it came here, god dammit');
+      /*for some reason if I add the LoadingSpinner on the Render,
+      the modal simply does not work.(????) Should I add ComponentWillMount function
+      to have the state working? Great question*/
       this.state.modal.modal('show');
+      FlowRouter.go(FlowRouter.current().name);
+      /*Ok, after this point the modal will show, user will log in and the modal will close
+      And we can get back to business*/
     }
+    /*verify if the user actually has an existing shopping cart before creating one*/
+    var handler= Meteor.subscribe("shoppingcart");
+    var shoppingCart = ShoppingCart.find({}).fetch()[0];
+    let newSC = null;
+    console.log(shoppingCart);
+    if(shoppingCart === undefined){
+        newSC = ShoppingCart.insert({
+        owner: Meteor.user()._id,
+        items: []
+      }, (err, obj) => {
+        if(err){
+          console.error('error creating shopping cart');
+        }
+        return obj;
+      });
+      /*in this case, as the user does not have a shopping cart,
+      the item is not verified*/
+      ShoppingCart.update({_id: newSC}, {$push: {
+        'items': this.data.product
+      }
+      });
+    }else {
+      /*verify if exists*/
+      if(productExists(shoppingCart.items, this.data.product._id)){
+        this.showError();
+      }else{
+        ShoppingCart.update({_id: shoppingCart._id}, {$push: {
+          'items': this.data.product
+        }
+        });
+      }
+    }
+    /*Now, we add the item into the shopping cart yeah*/
+    console.log('aparently is done');
+    /*now I need to verify if the item is not add already!. In case of true
+    you know... say it loudly*/
   },
   showImageonSlider(index, event){
       this.setState({
@@ -44,6 +97,7 @@ ProductDetails = React.createClass({
     state.mainImage = this.data.product.images[0];
     state.rating = $('#'+'rating'+this.data.product._id).rating({interactive: false});
     state.modal = $('#loginModalProduct').modal({detachable: false});
+    state.popup = $('#')
     this.setState(state);
   },
   allImagesRender(){
@@ -55,6 +109,11 @@ ProductDetails = React.createClass({
               </div>);
     });
   },
+  showError(){
+
+    var t = $('#errorPopup').popup('show');
+    console.log(t);
+  },
   render(){
 
     return (
@@ -64,6 +123,7 @@ ProductDetails = React.createClass({
             <h1>{this.data.product.name}</h1>
             <small>by <ProductBrand brand={this.data.product.brand} /> </small>
           </div>
+          
         </div>
         <div className="two column row">
           <div className="column">
