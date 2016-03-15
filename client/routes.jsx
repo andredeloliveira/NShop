@@ -53,10 +53,10 @@ FlowRouter.route("/admin/brands", {
     renderLayoutWith(<BrandsAdmin />);
   }
 });
-FlowRouter.route("/mycart", {
-  name: "mycart",
+FlowRouter.route("/shoppingCart", {
+  name: "shoppingCart",
   action(params){
-    renderLayoutWith(<ShoppingCart />)
+    renderLayoutWith(<MyCart />)
   }
 });
 /*function to render all the layouts with the main Component (Layout)*/

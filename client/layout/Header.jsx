@@ -11,6 +11,7 @@ Header = React.createClass({
   },
   handleLogout(){
     Meteor.logout();
+    FlowRouter.go("Home");
   },
   renderShoppingCart(){
     return <ShoppingCartHeader nItems={this.data.shoppingCartItems.items.length} /> ;
@@ -30,7 +31,6 @@ Header = React.createClass({
     if(this.data.isCartLoading){
       return <LoadingSpinner />
     }
-    console.log(this.data.shoppingCartItems)
     return(
       <div className="ui fixed menu">
         <a className="item" href="/">Home</a>
@@ -41,9 +41,7 @@ Header = React.createClass({
         {currentUser && hasShoppingCart ? <div> {this.renderShoppingCart()}</div> :
          <div>
            <ShoppingCartHeader nItems={0} />
-           <div className="ui custom popup top left transition hidden" id="errorPopup">
-             This item is already on you shopping cart!
-           </div>
+
          </div>
         }
         </div>

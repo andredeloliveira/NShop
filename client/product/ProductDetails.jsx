@@ -34,8 +34,10 @@ ProductDetails = React.createClass({
       the modal simply does not work.(????) Should I add ComponentWillMount function
       to have the state working? Great question*/
       this.state.modal.modal('show');
+      /*I'm not totally sure if this is actually needed. But for the sake of
+      working it will stay in here.*/
       FlowRouter.go(FlowRouter.current().name);
-      /*Ok, after this point the modal will show, user will log in and the modal will close
+      /*Ok, after this point the modal will show. User will log in and the modal will close
       And we can get back to business*/
     }
     /*verify if the user actually has an existing shopping cart before creating one*/
@@ -55,25 +57,28 @@ ProductDetails = React.createClass({
       });
       /*in this case, as the user does not have a shopping cart,
       the item is not verified*/
+      let item = this.data.product;
+      item.quantity = 1;
       ShoppingCart.update({_id: newSC}, {$push: {
-        'items': this.data.product
+        'items': item
       }
       });
     }else {
       /*verify if exists*/
       if(productExists(shoppingCart.items, this.data.product._id)){
-        this.showError();
+        console.log('item already in the shopping cart.');
       }else{
+        let item = this.data.product;
+        item.quantity = 1;
         ShoppingCart.update({_id: shoppingCart._id}, {$push: {
-          'items': this.data.product
+          'items': item
         }
         });
       }
     }
-    /*Now, we add the item into the shopping cart yeah*/
-    console.log('aparently is done');
-    /*now I need to verify if the item is not add already!. In case of true
-    you know... say it loudly*/
+    /*And then it redirects to the shopping cart page. Maybe add some message
+    saying: Well, you've already added this ? --- good question.*/
+    FlowRouter.go('/shoppingCart');
   },
   showImageonSlider(index, event){
       this.setState({
@@ -110,9 +115,13 @@ ProductDetails = React.createClass({
     });
   },
   showError(){
+    /*I don't really need the error;.. I just need to redirect to the
+    actual shopping cart. YAAY I can write a component for that!!, or maybe not.
+    I don't really know what is the best mode to do. Loads of queries or
+    pass the object along on the client side. I should be able to see how
+    the loading time increments or not.*/
+    $('#errorPopup').popup().popup('show');
 
-    var t = $('#errorPopup').popup('show');
-    console.log(t);
   },
   render(){
 
@@ -123,7 +132,11 @@ ProductDetails = React.createClass({
             <h1>{this.data.product.name}</h1>
             <small>by <ProductBrand brand={this.data.product.brand} /> </small>
           </div>
-          
+          <div className="column">
+            <div className="ui custom popup top left transition hidden" id="errorPopup">
+              This item is already on your shopping cart!
+            </div>
+          </div>
         </div>
         <div className="two column row">
           <div className="column">
@@ -139,11 +152,6 @@ ProductDetails = React.createClass({
                     {this.data.product.stock > 0 ?<div className="inStock">In stock</div>:
                     <div className="outOfStock">Out of stock</div> }
                   </div>
-              </div>
-              <div className="row">
-                <div className="column">
-                  <input type="number" name="quantity"/>
-                </div>
               </div>
               <div className="row">
                 <div className="column">
