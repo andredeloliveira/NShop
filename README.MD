@@ -1,16 +1,14 @@
 #NShop
 
-Welcome to NShop, a brand-new OpenSource solution in e-commerce entirely based on JS (That's it JavaScript!).
+Welcome to NShop, a brand-new OpenSource solution in e-commerce entirely based on JS (That's it, JavaScript!).
 
-So, It is still early development fase. We just started our project and we still have long path to finish. But soon we will accomplish it.
+So, It is still on the early steps of development. We just started our project and we still have a long path to finish. But soon, we will accomplish it.
 
-This project is under development. Soon we plan to release our alpha version.
 
 ##What should I know first?
 
 ###Tech Stack
 
-Our tech stack is lovely <3
 
 1. Meteor
 
@@ -18,8 +16,8 @@ Meteor is a full-stack framework all written in JavaScript. It runs on server us
 
 2. React
 
-React is becoming the most popular UI framework ever. Well, it is easy to understand, they have server rendering and a easy-to-learn
-`.jsx` files, which mix JS with html, making really easy to write components. Also, it accepts ES6 sintax which is great!
+React is easy to understand and it's fast! It has server rendering and a easy-to-learn
+`.jsx` files, which mix JS and html. Also, it accepts ES6 sintax.
 
 3. Semantic-ui  
 
@@ -27,7 +25,7 @@ We use Semantic-ui to organize the UI. More info and docs [here](http://Semantic
 
 ## Getting Started
 
-First of all you'll need Node.js. Depending on your OS it'll be different.
+Node.js:
 
 Ubuntu and Debian:
 
@@ -76,6 +74,4 @@ their docs. They are really good!
 
 Happy coding!
 
-Cheers,
-
-Andre.
+Cheers!
