@@ -34,14 +34,17 @@ ImageField = React.createClass({
     this.refs.dropzone.open();
   },
   imagesRender(){
+
     return this.state.files.map((file, index)=>{
-      let testClick = this.removeImage.bind(this, index);
-      var newKey = file.name + 'wow';
+      console.log(file);
+      let remove = this.removeImage.bind(this, index);
       return (
-        <div key={newKey + 'div'} id={file.name} className="column">
+        <div key={index} id={file.name} className="ui grid">
           <div className="row">
-            <img src={file.preview} className="adminImage"  />
-            <span alt="remove image" className="circular red ui button " onClick={testClick}>X</span>
+            <div className="column">
+            <span alt="remove image" className="circular red ui button " onClick={remove}>X</span>
+            <img src={file.preview} alt={file.name} className="ui medium image"  />
+            </div>
           </div>
         </div>
       );

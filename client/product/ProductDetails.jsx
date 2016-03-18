@@ -44,7 +44,6 @@ ProductDetails = React.createClass({
     var handler= Meteor.subscribe("shoppingcart");
     var shoppingCart = ShoppingCart.find({}).fetch()[0];
     let newSC = null;
-    console.log(shoppingCart);
     if(shoppingCart === undefined){
         newSC = ShoppingCart.insert({
         owner: Meteor.user()._id,
@@ -59,6 +58,8 @@ ProductDetails = React.createClass({
       the item is not verified*/
       let item = this.data.product;
       item.quantity = 1;
+      item.selectedColor = this.refs.colours.getSelectedColor();
+      console.log(item.selectedColor)
       ShoppingCart.update({_id: newSC}, {$push: {
         'items': item
       }
@@ -67,18 +68,19 @@ ProductDetails = React.createClass({
       /*verify if exists*/
       if(productExists(shoppingCart.items, this.data.product._id)){
         console.log('item already in the shopping cart.');
+        this.setMessageText('item already added to the shopping cart');
       }else{
         let item = this.data.product;
         item.quantity = 1;
+        item.selectedColor = this.refs.colours.getSelectedColor();
         ShoppingCart.update({_id: shoppingCart._id}, {$push: {
           'items': item
         }
         });
+        this.setMessageText('Item added to your shopping cart!');
       }
     }
-    /*And then it redirects to the shopping cart page. Maybe add some message
-    saying: Well, you've already added this ? --- good question.*/
-    FlowRouter.go('/shoppingCart');
+
   },
   showImageonSlider(index, event){
       this.setState({
@@ -86,7 +88,7 @@ ProductDetails = React.createClass({
       });
   },
   //we can leave this as a Product function inside the Constructor.. that still we be done.
-  //I hope to erase this message in the next commit
+  //I hope to erase this message in th'';e next commit
   getRating(){
     var avg = this.data.product.rating.avgRate;
     var nRates = this.data.product.rating.nRates;
@@ -96,13 +98,31 @@ ProductDetails = React.createClass({
     }
     return result;
   },
-
+  getInitialState(){
+    var state = {
+      mainImage: null,
+      rating: null,
+      modal: null,
+      message: null,
+      popup: null
+    };
+    return state;
+  },
+  setMessageText(text){
+    this.setState({
+      message: text
+    });
+  },
   componentDidMount(){
     var state = {} ;
     state.mainImage = this.data.product.images[0];
     state.rating = $('#'+'rating'+this.data.product._id).rating({interactive: false});
     state.modal = $('#loginModalProduct').modal({detachable: false});
-    state.popup = $('#')
+    state.message = '';
+    state.popup = $('#addToCart').popup({
+      popup: $("#messagePopup"),
+      on: 'click'
+    });
     this.setState(state);
   },
   allImagesRender(){
@@ -114,14 +134,8 @@ ProductDetails = React.createClass({
               </div>);
     });
   },
-  showError(){
-    /*I don't really need the error;.. I just need to redirect to the
-    actual shopping cart. YAAY I can write a component for that!!, or maybe not.
-    I don't really know what is the best mode to do. Loads of queries or
-    pass the object along on the client side. I should be able to see how
-    the loading time increments or not.*/
-    $('#errorPopup').popup().popup('show');
-
+  getMessageText(){
+    return this.state.message;
   },
   render(){
 
@@ -133,8 +147,8 @@ ProductDetails = React.createClass({
             <small>by <ProductBrand brand={this.data.product.brand} /> </small>
           </div>
           <div className="column">
-            <div className="ui custom popup top left transition hidden" id="errorPopup">
-              This item is already on your shopping cart!
+            <div className="ui custom popup top left transition hidden" id="messagePopup">
+              {this.getMessageText()}
             </div>
           </div>
         </div>
@@ -163,7 +177,7 @@ ProductDetails = React.createClass({
             <div className="ui centered aligned grid">
               <div className="row">
                   <div className="sixteen wide column">
-                    <button className="fluid ui button" onClick={this.addToCart}>Add to bag</button>
+                    <button className="fluid ui button" id="addToCart" onClick={this.addToCart}>Add to bag</button>
                   </div>
               </div>
               <div className="row">

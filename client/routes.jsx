@@ -59,6 +59,12 @@ FlowRouter.route("/shoppingCart", {
     renderLayoutWith(<MyCart />)
   }
 });
+FlowRouter.route("/checkout",{
+  name: "Checkout",
+  action(params){
+    renderLayoutWith(<Checkout />);
+  }
+});
 /*function to render all the layouts with the main Component (Layout)*/
 function renderLayoutWith(component){
   ReactLayout.render(Main,{

@@ -19,7 +19,6 @@ MyCart = React.createClass({
     and update the value there. It might be a bit silly, but it looks awesome.
     -------------*/
     //first of all, update the changed values;
-
     var updatedItems = this.data.shoppingCart.items.map( (item, index) => {
         if(item.name === event.target.name){
             item.quantity = event.target.value;
@@ -33,7 +32,6 @@ MyCart = React.createClass({
           }
         }
     );
-
   },
   removeItem(item, index, event){
     /*only updates the array inside the database.*/
@@ -43,7 +41,6 @@ MyCart = React.createClass({
         'items' : item
       }
     });
-    console.log(this.data.shoppingCart);
   },
   itemsRender(){
     return this.data.shoppingCart.items.map((item, index) => {
@@ -55,7 +52,12 @@ MyCart = React.createClass({
                     <div className="content">
                       <a className="header">{item.name}</a>
                       <div className="meta">
-                        <span className="cinema">{item.description}</span>
+                        {item.selectedColor ?
+                          <div>
+                            Color:
+                            <span className="cinema">{item.selectedColor}</span>
+                          </div> :
+                        null }
                       </div>
                       <div className="description">
                         <h1>${item.price}</h1>
@@ -80,19 +82,22 @@ MyCart = React.createClass({
       /*the problem here is that I can't get the fucking quantity value, shit*/
       return  item.price * item.quantity;
     });
-    console.log('prices',prices);
     var total = prices.reduce( (previous, current) => {
       return previous + current;
     });
-    console.log('total', total);
     return total;
+  },
+  goToCheckout(event){
+    FlowRouter.go("Checkout");
   },
   render(){
     if(this.data.isLoading) {
       return <LoadingSpinner />
     }
+    console.log(this.data.shoppingCart)
     return (
           <div>
+            <h1>Shopping Cart</h1>
             <div className="ui divided items">
               {this.itemsRender()}
             </div>
@@ -100,6 +105,13 @@ MyCart = React.createClass({
                   Total
             </h2>
             <Total total={this.getTotal()} />
+            <div className="ui grid right aligned">
+              <div className="row">
+                <div className="column">
+                  <button className="ui huge button" onClick={this.goToCheckout}>Checkout</button>
+                </div>
+              </div>
+            </div>
           </div>
            );
   }
