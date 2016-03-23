@@ -42,10 +42,10 @@ ProductDetails = React.createClass({
     }
     /*verify if the user actually has an existing shopping cart before creating one*/
     var handler= Meteor.subscribe("shoppingcart");
-    var shoppingCart = ShoppingCart.find({}).fetch()[0];
+    var shoppingCart = ShoppingCarts.find({}).fetch()[0];
     let newSC = null;
     if(shoppingCart === undefined){
-        newSC = ShoppingCart.insert({
+        newSC = ShoppingCarts.insert({
         owner: Meteor.user()._id,
         items: []
       }, (err, obj) => {
@@ -60,7 +60,7 @@ ProductDetails = React.createClass({
       item.quantity = 1;
       item.selectedColor = this.refs.colours.getSelectedColor();
       console.log(item.selectedColor)
-      ShoppingCart.update({_id: newSC}, {$push: {
+      ShoppingCarts.update({_id: newSC}, {$push: {
         'items': item
       }
       });
@@ -73,7 +73,7 @@ ProductDetails = React.createClass({
         let item = this.data.product;
         item.quantity = 1;
         item.selectedColor = this.refs.colours.getSelectedColor();
-        ShoppingCart.update({_id: shoppingCart._id}, {$push: {
+        ShoppingCarts.update({_id: shoppingCart._id}, {$push: {
           'items': item
         }
         });

@@ -4,7 +4,7 @@ MyCart = React.createClass({
     var SCHandle = Meteor.subscribe("shoppingcart");
     return {
       isLoading : ! SCHandle.ready(),
-      shoppingCart : ShoppingCart.find({}).fetch()[0]
+      shoppingCart : ShoppingCarts.find({}).fetch()[0]
     }
   },
   getInitialState(){
@@ -26,7 +26,7 @@ MyCart = React.createClass({
         return item;
     });
     /*then we can update the collection, setting all the new values*/
-    ShoppingCart.update({_id: this.data.shoppingCart._id}, {
+    ShoppingCarts.update({_id: this.data.shoppingCart._id}, {
         $set: {
             'items': updatedItems
           }
@@ -36,7 +36,7 @@ MyCart = React.createClass({
   removeItem(item, index, event){
     /*only updates the array inside the database.*/
     console.log(item._id);
-    ShoppingCart.update({_id: this.data.shoppingCart._id}, {
+    ShoppingCarts.update({_id: this.data.shoppingCart._id}, {
       $pull: {
         'items' : item
       }

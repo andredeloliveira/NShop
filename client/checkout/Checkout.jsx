@@ -3,6 +3,7 @@ Checkout = React.createClass({
     return (
       <div>
         <Shipping />
+        <PaymentDetails />
       </div>
     );
   }

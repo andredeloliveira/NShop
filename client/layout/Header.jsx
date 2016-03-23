@@ -6,7 +6,7 @@ Header = React.createClass({
     return {
       isCartLoading: ! shoppingCartItemsHandler.ready(),
       currentUser: Meteor.user(),
-      shoppingCartItems: ShoppingCart.find({}).fetch()[0]
+      shoppingCartItems: ShoppingCarts.find({}).fetch()[0]
     }
   },
   handleLogout(){

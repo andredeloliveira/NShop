@@ -15,7 +15,12 @@ Meteor.publish("brands", function(){
   return Brands.find({});
 });
 Meteor.publish("shoppingcart", function(){
-  return ShoppingCart.find({
+  return ShoppingCarts.find({
+    owner: this.userId
+  });
+});
+Meteor.publish("shipping", function() {
+  return ShippingInfos.find({
     owner: this.userId
   });
 });

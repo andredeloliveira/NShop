@@ -1,12 +1,12 @@
 
 /*defining shopping cart now*/
-ShoppingCart = new Mongo.Collection("shoppingcart");
+ShoppingCarts = new Mongo.Collection("shoppingcart");
 
 /*
 Storing data about the user's shoppingCart can have some interesting
 results.
 */
-ShoppingCart.allow({
+ShoppingCarts.allow({
   insert: function(){
     return true;
   },
