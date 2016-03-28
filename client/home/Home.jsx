@@ -19,7 +19,6 @@ Home = React.createClass({
     return(
       <div>
         <h1>Products for sale</h1>
-        <h1>Fazer os objetos pra cada coisa que é inserida no banco pra não virar bagunça</h1>
         <div className="ui three column grid">
           {this.productsRender()}
         </div>

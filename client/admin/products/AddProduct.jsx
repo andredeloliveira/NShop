@@ -28,7 +28,7 @@ getMeteorData(){
       return imagesToBeInserted;
     }
     /*get all the values again, into the object*/
-    var newProductObj = {
+    var newProductObj = new ProductObj({
       name: event.target.name.value,
       description: event.target.description.value,
       weight : event.target.weight.value,
@@ -39,13 +39,8 @@ getMeteorData(){
       stock: event.target.stock.value,
       brand: event.target.brand.value,
       category: event.target.category.value,
-      rating: {
-        avgRate: 0,
-        nRates: 0
-      },
-      images: [],
-      colors: []
-    };
+    });
+
     /*adds the images to the database.. I think it can be refactored to a
     single function that returns an Array with all the added images, but
     we still need to add the component to add into the db and another one for
