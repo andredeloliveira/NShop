@@ -1,4 +1,18 @@
 PaymentDetails = React.createClass({
+  pay(event){
+    event.preventDefault();
+    data = {
+      email : 'oliveira.andrede@gmail.com',
+      token: '0339D26F3B794C39BEAECB9B529706EE',
+      currency: 'BRL',
+      itemId1: '1234abc',
+      itemDescription1: 'hjfdsjklsdfjklfdsa',
+      itemAmount1: 130,
+      itemQuantity1: 3,
+      itemWeight1: 100
+    }
+
+  },
   render(){
     return (
       <div>
@@ -61,6 +75,7 @@ PaymentDetails = React.createClass({
                     </div>
                   </div>
             </form>
+            <button onClick={this.pay}className="ui button">Pay!</button>
         </div>
     );
   }
